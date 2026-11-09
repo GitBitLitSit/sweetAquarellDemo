@@ -13,7 +13,7 @@
   Cache-Control: public, max-age=2592000
 /cards/*
   Cache-Control: public, max-age=2592000
-/logo-176.png
+/logo-*.png
   Cache-Control: public, max-age=2592000
 /logo.svg
   Cache-Control: public, max-age=2592000

@@ -16,7 +16,7 @@ const photos = [
 ];
 const photo = id => asset(`cover/${id}.jpg`);
 // Small WebP versions for the page; the JPGs stay only as fallback and for the share image.
-const srcSet = id => [220, 320, 460].map(w => `${asset(`cover/${id}-${w}.webp`)} ${w}w`).join(', ');
+const srcSet = id => [160, 220, 260, 320, 390, 460].map(w => `${asset(`cover/${id}-${w}.webp`)} ${w}w`).join(', ');
 
 // Bordeaux Christmas card in the middle, "jemand fehlt" beside it.
 const fan = [1, 8, 5, 9, 7];
@@ -104,7 +104,7 @@ export default function Cover() {
       <div className="grain" aria-hidden="true" />
       <header className="cover-top">
         <div className="brand">
-          <img className="logo" src={asset('logo-176.png')} width="44" height="39" alt="" />
+          <img className="logo" src={asset('logo-88.png')} srcSet={`${asset('logo-88.png')} 2x, ${asset('logo-132.png')} 3x, ${asset('logo-176.png')} 4x`} width="44" height="39" alt="" />
           <span className="brand-text">
             <span className="brand-name">sweetaquarell</span>
             <span className="brand-sub">Aquarellkarten</span>

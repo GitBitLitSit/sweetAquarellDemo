@@ -31,7 +31,17 @@ const inlineCss = {
 };
 
 // BASE_PATH is set by the GitHub Pages workflow, e.g. '/sweetAquarellDemo/'.
-export default defineConfig(({ mode }) => ({
+// Coming-soon build ships Preact instead of React: same components, ~40 KB less JavaScript.
+// Only for the production build; the dev server keeps React for fast refresh.
+const preactAlias = [
+  { find: 'react-dom/client', replacement: 'preact/compat/client' },
+  { find: 'react-dom', replacement: 'preact/compat' },
+  { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' },
+  { find: /^react$/, replacement: 'preact/compat' },
+];
+
+export default defineConfig(({ mode, command }) => ({
+  resolve: mode === 'cover' && command === 'build' ? { alias: preactAlias } : {},
   base: process.env.BASE_PATH || '/',
   plugins: [react(), mode === 'cover' && coverAtRoot, mode === 'cover' && inlineCss],
   // `npm run build:cover` ships only the coming-soon page plus its legal pages.

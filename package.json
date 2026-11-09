@@ -11,6 +11,7 @@
     "build:cover": "vite build --mode cover && mv dist/cover.html dist/index.html && node scripts/prerender-cover.mjs"
   },
   "dependencies": {
+    "preact": "^10.29.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.6"
