@@ -43,13 +43,19 @@ const BREVO_URL = 'https://9ce1b378.sibforms.com/serve/MUIFAPdWeGwf3CLCvwCVGB6LU
 
 function Signup() {
   const [state, setState] = useState('idle'); // idle | sending | sent | error
+  // Own validation messages: iOS Safari blocks an invalid submit but shows no hint at all.
+  const [hint, setHint] = useState(null); // null | 'email' | 'consent'
 
   async function submit(e) {
     e.preventDefault();
+    const form = e.target;
+    if (!form.EMAIL.checkValidity()) { setHint('email'); form.EMAIL.focus(); return; }
+    if (!form.consent.checked) { setHint('consent'); return; }
+    setHint(null);
     setState('sending');
     try {
       // shortcut: no-cors hides Brevo's answer, so a rejected address still shows "Danke"; Brevo's DOI mail is the real check.
-      await fetch(BREVO_URL, { method: 'POST', mode: 'no-cors', body: new FormData(e.target) });
+      await fetch(BREVO_URL, { method: 'POST', mode: 'no-cors', body: new FormData(form) });
       setState('sent');
     } catch {
       setState('error');
@@ -59,25 +65,29 @@ function Signup() {
   if (state === 'sent') return (
     <div className="signup-done" role="status">
       <div className="script script-lg">Danke dir! <Heart filled /></div>
-      <p>Bitte bestätige noch kurz deine E-Mail-Adresse. Zum Shop-Start bekommst du deinen 10 %-Code.</p>
+      <p>Bitte bestätige noch kurz deine E-Mail-Adresse. Zum Shop-Start bekommst du deinen 10 %-Code.</p>
     </div>
   );
 
   return (
-    <form className="signup" onSubmit={submit}>
+    <form className="signup" onSubmit={submit} noValidate>
       {/* Brevo's honeypot: bots fill it, Brevo drops those sign-ups. */}
       <input type="text" name="email_address_check" defaultValue="" hidden tabIndex={-1} autoComplete="off" />
       <input type="hidden" name="locale" value="de" />
-      {state === 'error' && <p className="consent" role="alert">Das hat leider nicht geklappt. Bitte versuch es nochmals.</p>}
-      <div className="signup-row">
+      {state === 'error' && <p className="form-hint" role="alert">Das hat leider nicht geklappt. Bitte versuch es nochmals.</p>}
+      <div className={hint === 'email' ? 'signup-row is-invalid' : 'signup-row'}>
         <label className="sr-only" htmlFor="email">E-Mail-Adresse</label>
-        <input id="email" name="EMAIL" type="email" placeholder="deine@email.com" autoComplete="email" required />
-        <button className="btn" type="submit" disabled={state === 'sending'}>10 % sichern</button>
+        <input id="email" name="EMAIL" type="email" placeholder="deine@email.com" autoComplete="email" required
+          aria-invalid={hint === 'email'} aria-describedby={hint === 'email' ? 'hint' : undefined} onInput={() => hint === 'email' && setHint(null)} />
+        <button className="btn" type="submit" disabled={state === 'sending'}>10 % sichern</button>
       </div>
-      <label className="consent">
-        <input type="checkbox" required />
+      {hint === 'email' && <p className="form-hint" id="hint" role="alert">Bitte gib eine gültige E-Mail-Adresse ein.</p>}
+      <label className={hint === 'consent' ? 'consent is-invalid' : 'consent'}>
+        <input type="checkbox" name="consent" required aria-invalid={hint === 'consent'} aria-describedby={hint === 'consent' ? 'hint' : undefined}
+          onChange={() => hint === 'consent' && setHint(null)} />
         <span>Ja, ich möchte den Newsletter von sweetaquarell erhalten. Abmeldung jederzeit. Mehr in der <a href={asset('datenschutz')}>Datenschutzerklärung</a>.</span>
       </label>
+      {hint === 'consent' && <p className="form-hint" id="hint" role="alert">Bitte bestätige noch kurz, dass du den Newsletter erhalten möchtest.</p>}
     </form>
   );
 }
