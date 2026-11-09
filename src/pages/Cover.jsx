@@ -16,8 +16,8 @@ const photos = [
 ];
 const photo = id => asset(`cover/${id}.jpg`);
 
-// "jemand fehlt" in the middle, the Christmas cards beside it.
-const fan = [1, 5, 8, 9, 7];
+// Bordeaux Christmas card in the middle, "jemand fehlt" beside it.
+const fan = [1, 8, 5, 9, 7];
 
 // The offer as a note circled by hand: two loose pencil loops, the number in script, a small painted heart.
 function Offer() {
