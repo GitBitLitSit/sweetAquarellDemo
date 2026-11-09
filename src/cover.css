@@ -9,7 +9,12 @@
 /* Fixed break so the headline reads as two even lines, the second in wine italic. */
 .h1-accent { display: block; font-style: italic; color: var(--wine); }
 .cover-text > p { max-width: 460px; margin: 14px auto 22px; font-size: 17px; }
-.offer-line { display: block; text-align: center; margin-top: 6px; }
+.cover-text > p:has(+ .offer-note) { margin-bottom: 8px; }
+.cover-text > .offer-note { margin-top: 0; }
+.offer-note strong { white-space: nowrap; }
+/* Line breaks per layout: mobile lets the copy flow (balanced), desktop sets the break after "Design:". */
+.br-desk { display: none; }
+.cover-text > p { text-wrap: balance; }
 .cover-text strong { color: var(--wine); font-weight: 600; }
 
 /* Fan of cards: each card rotates around a point below the stack, like cards held in a hand. */
@@ -22,8 +27,12 @@
   transition: transform .6s cubic-bezier(.16, 1, .3, 1);
 }
 .fan-wrap:hover .fan img { transform: translateX(-50%) rotate(calc(var(--i) * 15deg)) translateY(-6px); }
+@media (hover: hover) and (pointer: fine) {
+  .fan img { cursor: pointer; transition: transform .45s cubic-bezier(.16, 1, .3, 1), box-shadow .45s; }
+  .fan-wrap .fan img:hover { z-index: 9 !important; transform: translateX(-50%) rotate(calc(var(--i) * 15deg)) translateY(-26px) scale(1.04); box-shadow: 0 28px 48px rgba(74,63,58,.28), 0 4px 10px rgba(74,63,58,.14); }
+}
 
-.offer { position: absolute; right: -4px; top: -28px; z-index: 10; width: 190px; height: 114px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--wine); transform: rotate(-4deg); }
+.offer { position: absolute; right: -8px; top: auto; bottom: 6px; z-index: 10; width: 190px; height: 114px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--wine); transform: rotate(-4deg); }
 .offer-loops { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; overflow: visible; }
 .offer-num { font-family: var(--script); font-size: 50px; font-weight: 500; line-height: .9; letter-spacing: -.01em; }
 .offer-sub { font-size: 11px; color: var(--ink); margin-top: 2px; white-space: nowrap; }
@@ -64,7 +73,7 @@
 .cover-legal nav { display: flex; justify-content: center; gap: 20px; padding: 8px 22px 28px; font-size: 13px; }
 .cover-legal a { color: var(--muted); }
 
-@media (min-width: 900px) {
+@media (min-width: 1120px) {
   .cover-hero { overflow: visible; grid-template-columns: 1fr 1fr; align-items: center; text-align: left; padding: 30px 22px 40px; min-height: min(660px, 82dvh); }
   .cover-hero .blot-rose { left: auto; right: 260px; }
   .cover-hero .blot-rose:not(.blot-rose-low) { top: 80px; right: 320px; }
@@ -74,7 +83,10 @@
   .cover-top { justify-content: flex-start; width: 100%; max-width: 1120px; margin: 0 auto; }
   .fan { height: 400px; }
   .fan img { width: 220px; }
-  .offer { right: -70px; top: -70px; width: 300px; height: 180px; }
+  .br-desk { display: inline; }
+  .br-mobile { display: none; }
+  .cover-text > p { text-wrap: pretty; }
+  .offer { right: -50px; top: -70px; bottom: auto; width: 300px; height: 180px; }
   .offer-num { font-size: 76px; }
   .offer-sub { font-size: 15px; margin-top: 4px; }
   .offer-heart { right: -8px; bottom: 22px; width: 32px; height: 29px; }
@@ -101,6 +113,7 @@
   .cover-text > :nth-child(2) { animation-delay: .15s; }
   .cover-text > :nth-child(3) { animation-delay: .3s; }
   .cover-text > :nth-child(4) { animation-delay: .45s; }
+  .cover-text > :nth-child(5) { animation-delay: .6s; }
   .signup-done { animation: rise .6s cubic-bezier(.16, 1, .3, 1); }
 
   /* Spacing is margin, not gap, so -50% of the doubled track is exactly one set of cards. */

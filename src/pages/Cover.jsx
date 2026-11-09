@@ -111,7 +111,8 @@ export default function Cover() {
           <div className="cover-text">
             <div className="script">handgemalt von Laura</div>
             <h1>Für jeden Moment <span className="h1-accent">die richtige Karte.</span></h1>
-            <p>Geburtstag, Weihnachten, Trauer oder dein eigenes Design: jede Karte von Hand mit Aquarell gemalt. Zum Shop-Start gibt es <strong className="offer-line">10 % auf deine erste Bestellung.</strong></p>
+            <p>Geburtstag, Weihnachten, Trauer oder dein eigenes Design:<br className="br-desk" /> jede Karte von Hand mit Aquarell gemalt.</p>
+            <p className="offer-note">Zum Shop-Start:<br className="br-mobile" /> <strong>10 % auf deine erste Bestellung.</strong></p>
             <Signup />
           </div>
         </section>
