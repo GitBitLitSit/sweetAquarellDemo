@@ -119,7 +119,7 @@ export default function Cover() {
             <div className="fan" aria-hidden="true">
               {fan.map((id, i) => (
                 <img key={id} src={photo(id)} srcSet={srcSet(id)} sizes="(min-width: 1120px) 220px, 150px" width="460" height="690" alt=""
-                  fetchPriority={i === 2 ? 'high' : 'auto'} decoding="async" style={{ '--i': i - 2, '--d': Math.abs(i - 2), zIndex: 5 - Math.abs(i - 2) }} />
+                  fetchpriority={i === 2 ? 'high' : 'auto'} decoding="async" style={{ '--i': i - 2, '--d': Math.abs(i - 2), zIndex: 5 - Math.abs(i - 2) }} />
               ))}
             </div>
             <Offer />
