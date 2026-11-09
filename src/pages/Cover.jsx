@@ -15,6 +15,8 @@ const photos = [
   { id: 7, name: 'Hirsch zum Dreissigsten' },
 ];
 const photo = id => asset(`cover/${id}.jpg`);
+// Small WebP versions for the page; the JPGs stay only as fallback and for the share image.
+const srcSet = id => [220, 320, 460].map(w => `${asset(`cover/${id}-${w}.webp`)} ${w}w`).join(', ');
 
 // Bordeaux Christmas card in the middle, "jemand fehlt" beside it.
 const fan = [1, 8, 5, 9, 7];
@@ -116,7 +118,8 @@ export default function Cover() {
           <div className="fan-wrap">
             <div className="fan" aria-hidden="true">
               {fan.map((id, i) => (
-                <img key={id} src={photo(id)} alt="" style={{ '--i': i - 2, '--d': Math.abs(i - 2), zIndex: 5 - Math.abs(i - 2) }} />
+                <img key={id} src={photo(id)} srcSet={srcSet(id)} sizes="(min-width: 1120px) 220px, 150px" width="460" height="690" alt=""
+                  fetchPriority={i === 2 ? 'high' : 'auto'} decoding="async" style={{ '--i': i - 2, '--d': Math.abs(i - 2), zIndex: 5 - Math.abs(i - 2) }} />
               ))}
             </div>
             <Offer />
@@ -137,7 +140,7 @@ export default function Cover() {
             <div className="marquee-track">
               {/* 4 copies: 7 photos alone would leave a gap on wide screens; -50% scroll stays seamless. */}
               {[...photos, ...photos, ...photos, ...photos].map((c, i) => (
-                <img key={i} src={photo(c.id)} alt={i < photos.length ? c.name : ''} aria-hidden={i >= photos.length} loading="lazy" />
+                <img key={i} src={photo(c.id)} srcSet={srcSet(c.id)} sizes="(min-width: 900px) 150px, 104px" width="320" height="480" alt={i < photos.length ? c.name : ''} aria-hidden={i >= photos.length} loading="lazy" decoding="async" />
               ))}
             </div>
           </div>
