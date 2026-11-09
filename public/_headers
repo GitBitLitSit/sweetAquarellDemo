@@ -1,0 +1,15 @@
+# HTML is always fetched fresh, so browsers never keep an old version of a page.
+/*
+  Cache-Control: no-cache
+
+# Hashed build files never change: cache them for a year.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images and fonts: cache for a week.
+/cover/*
+  Cache-Control: public, max-age=604800
+/cards/*
+  Cache-Control: public, max-age=604800
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable

@@ -17,5 +17,5 @@ export default defineConfig(({ mode }) => ({
   base: process.env.BASE_PATH || '/',
   plugins: [react(), mode === 'cover' && coverAtRoot],
   // `npm run build:cover` ships only the coming-soon page plus its legal pages.
-  build: mode === 'cover' ? { rollupOptions: { input: ['cover.html', 'danke.html', 'datenschutz.html', 'impressum.html'] } } : {},
+  build: mode === 'cover' ? { rollupOptions: { input: ['cover.html', 'danke.html', '404.html', 'datenschutz.html', 'impressum.html'] } } : {},
 }));
