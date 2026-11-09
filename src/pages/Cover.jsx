@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Heart } from '../components.jsx';
 import { asset } from '../data.js';
 
@@ -45,6 +45,8 @@ function Signup() {
   const [state, setState] = useState('idle'); // idle | sending | sent | error
   // Own validation messages: iOS Safari blocks an invalid submit but shows no hint at all.
   const [hint, setHint] = useState(null); // null | 'email' | 'consent'
+  // Time trap: people need a few seconds to type an address, bots submit right after load.
+  const shownAt = useRef(Date.now());
 
   async function submit(e) {
     e.preventDefault();
@@ -52,6 +54,8 @@ function Signup() {
     if (!form.EMAIL.checkValidity()) { setHint('email'); form.EMAIL.focus(); return; }
     if (!form.consent.checked) { setHint('consent'); return; }
     setHint(null);
+    // Bots get the normal thank-you but nothing is sent to Brevo: too fast, or the hidden honeypot is filled.
+    if (Date.now() - shownAt.current < 3000 || form.email_address_check.value) { setState('sent'); return; }
     setState('sending');
     try {
       // shortcut: no-cors hides Brevo's answer, so a rejected address still shows "Danke"; Brevo's DOI mail is the real check.
