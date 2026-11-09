@@ -1,0 +1,23 @@
+/* Legal pages (Impressum, Datenschutz): plain reading layout in the brand fonts and colours. */
+@import './fonts.css';
+:root { --paper: #FAF6F0; --ink: #4A3F3A; --ink-2: #5E524B; --muted: #7A6B63; --line: #D8CFC4; --wine: #8E2A3B; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink-2); font: 16px/1.65 'Source Sans 3', 'Helvetica Neue', sans-serif; -webkit-font-smoothing: antialiased; }
+.legal { max-width: 720px; margin: 0 auto; padding: 22px 22px 64px; }
+.legal-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; }
+.brand img { width: 44px; height: auto; }
+.brand-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 22px; line-height: 1.1; display: block; }
+.brand-sub { font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); display: block; }
+.back { color: var(--wine); text-decoration: none; font-size: 15px; white-space: nowrap; }
+.back:hover { text-decoration: underline; }
+h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: clamp(36px, 6vw, 48px); line-height: 1.1; color: var(--ink); margin: 0 0 8px; }
+h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 26px; line-height: 1.2; color: var(--ink); margin: 40px 0 8px; }
+h3 { font-size: 16px; font-weight: 600; color: var(--ink); margin: 22px 0 4px; }
+p, ul { margin: 0 0 12px; }
+ul { padding-left: 20px; }
+li { margin-bottom: 4px; }
+a { color: var(--wine); }
+address { font-style: normal; }
+.stand { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+.box { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; margin: 18px 0; }

@@ -6,7 +6,9 @@
     "dev": "vite",
     "build": "vite build && cp dist/index.html dist/404.html",
     "preview": "vite preview",
-    "test": "playwright test"
+    "test": "playwright test",
+    "cover-sheet": "vite --mode cover --open",
+    "build:cover": "vite build --mode cover && mv dist/cover.html dist/index.html"
   },
   "dependencies": {
     "react": "^18.3.1",

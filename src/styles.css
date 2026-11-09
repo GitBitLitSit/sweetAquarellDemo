@@ -238,10 +238,8 @@ textarea:focus, input:focus { outline: none; border-bottom-color: var(--wine); }
 
 /* Motion: only for people who have not asked for reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
-  /* Header logo paints its heart once on load: line, then wash, then the brush settles. */
-  .header .logo-line { stroke-dasharray: 100; animation: paint 1.4s .2s cubic-bezier(.65, 0, .35, 1) backwards; }
-  .header .logo-wash { animation: fade .8s 1.2s backwards; }
-  .header .logo-brush { animation: brush-in .7s .1s cubic-bezier(.16, 1, .3, 1) backwards; }
+  /* Header logo paints its heart outline once on load, like one brush stroke. */
+  .header .logo-line { stroke-dasharray: 100; animation: paint 1.6s .2s cubic-bezier(.65, 0, .35, 1) backwards; }
 
   /* Hero: card lands, text rises in sequence, the signature is written last. */
   .hero-card > img { animation: card-in 1s cubic-bezier(.16, 1, .3, 1) backwards; }
@@ -264,9 +262,8 @@ textarea:focus, input:focus { outline: none; border-bottom-color: var(--wine); }
     }
   }
 }
-@keyframes paint { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
 @keyframes fade { from { opacity: 0; } }
-@keyframes brush-in { from { opacity: 0; transform: translate(4px, -4px); } }
+@keyframes paint { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
 @keyframes card-in { from { opacity: 0; transform: translateY(28px) rotate(3deg); } }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
 @keyframes write { from { clip-path: inset(-20% 100% -20% 0); } to { clip-path: inset(-20% -10% -20% 0); } }

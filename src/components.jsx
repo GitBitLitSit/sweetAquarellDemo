@@ -16,16 +16,31 @@ export const Heart = ({ filled, size = 18 }) => (
   </svg>
 );
 
-// Logo: a brush painting the outline of a heart; the stroke is still open where the brush is.
+// Logo: a heart outline in one brush stroke. Opaque strokes of growing width but shorter length merge into
+// one tapered shape (thin start, full belly, thin lift); the filter then makes it look like watercolor:
+// frayed edge, pale middle, pigment pooled darker along the rim.
+const HEART = 'M20 13C17.5 8.5 10 7.5 7 11.5 3.5 16 6.5 23.5 20 33.5 33.5 23.5 36.5 16 33 11.5 30 7.5 22.5 8.5 20.8 12.6';
 export const Logo = ({ size = 40 }) => (
   <svg className="logo" width={size} height={size} viewBox="0 0 40 40" aria-hidden="true">
-    <path className="logo-wash" d="M18 34C10 28 4 23 4 16.5 4 12.5 7 10 10.5 10c3 0 6 2 7.5 4.5C19.5 12 22.5 10 25.5 10c3.5 0 6.5 2.5 6.5 6.5 0 6.5-6 11.5-14 17.5z" fill="#D9A5A0" fillOpacity=".35" />
-    <path className="logo-line" pathLength="100" d="M18 34C10 28 4 23 4 16.5 4 12.5 7 10 10.5 10c3 0 6 2 7.5 4.5C19.5 12 22.5 10 25.5 10c3.5 0 6.5 2.5 6.5 6.5 0 2-.8 3.8-2 5.4"
-      fill="none" stroke="#8E2A3B" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
-    <g className="logo-brush">
-      <path d="M34.2 18.3 39 13.5" stroke="#4A3F3A" strokeWidth="2" strokeLinecap="round" />
-      <path d="M32.4 20.1 34.2 18.3" stroke="#B9A89C" strokeWidth="2.8" />
-      <path d="M29.2 23.4c.9-1.4 1.6-2.6 2.2-4.2l2 1.8c-1.3.9-2.6 1.7-4.2 2.4z" fill="#4A3F3A" />
+    <filter id="logo-wc" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="2" seed="3" />
+      <feDisplacementMap in="SourceGraphic" scale=".9" result="shape" />
+      <feMorphology in="shape" operator="erode" radius=".4" result="inner" />
+      <feComposite in="shape" in2="inner" operator="out" result="rim" />
+      <feGaussianBlur in="rim" stdDeviation=".18" result="rimSoft" />
+      <feComponentTransfer in="shape" result="body"><feFuncA type="linear" slope=".55" /></feComponentTransfer>
+      <feComponentTransfer in="rimSoft" result="edge"><feFuncA type="linear" slope=".85" /></feComponentTransfer>
+      <feMerge><feMergeNode in="body" /><feMergeNode in="edge" /></feMerge>
+    </filter>
+    <mask id="logo-paint">
+      <path className="logo-line" d={HEART} pathLength="100" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round" />
+    </mask>
+    <g mask="url(#logo-paint)">
+      <g filter="url(#logo-wc)" fill="none" stroke="#8E2A3B" strokeLinecap="round" strokeLinejoin="round">
+        <path d={HEART} strokeWidth="1.3" />
+        <path d={HEART} pathLength="100" strokeWidth="2.2" strokeDasharray="0 5 86 100" />
+        <path d={HEART} pathLength="100" strokeWidth="3.1" strokeDasharray="0 14 58 100" />
+      </g>
     </g>
   </svg>
 );

@@ -9,7 +9,9 @@ npm test           # Playwright smoke tests (desktop + phone); first run: npx pl
 npm run build      # static site in dist/
 ```
 
-Deploys to GitHub Pages on every push to `master` (`.github/workflows/deploy.yml`; enable Pages with source "GitHub Actions" in the repo settings).
+Live on sweetaquarell.ch via Cloudflare Pages: every push to `master` builds the coming-soon page (`npm run build:cover`, output `dist`).
+
+Coming-soon page: `npm run cover-sheet` (dev), `npm run build:cover` (build). Newsletter sign-ups go to Brevo (form URL in `src/pages/Cover.jsx`).
 
 Pages: `/` start, `/karten` (filter via `?anlass=`), `/karte/:id`, `/warenkorb`, `/ueber-mich`.
 
