@@ -88,7 +88,7 @@ export default function Cover() {
       <div className="grain" aria-hidden="true" />
       <header className="cover-top">
         <div className="brand">
-          <img className="logo" src={asset('logo.svg')} width="44" height="39" alt="" />
+          <img className="logo" src={asset('logo-176.png')} width="44" height="39" alt="" />
           <span className="brand-text">
             <span className="brand-name">sweetaquarell</span>
             <span className="brand-sub">Aquarellkarten</span>
