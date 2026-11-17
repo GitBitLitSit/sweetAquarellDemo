@@ -13,6 +13,7 @@ const photos = [
   { id: 10, name: 'Kugeln in Bordeaux und Violett' },
   { id: 6, name: 'Blaue Kugeln mit Mütze' },
   { id: 7, name: 'Hirsch zum Dreissigsten' },
+  { id: 11, name: 'Vier Kugeln in Rot und Kupfer' },
 ];
 const photo = id => asset(`cover/${id}.jpg`);
 // Small WebP versions for the page; the JPGs stay only as fallback and for the share image.
